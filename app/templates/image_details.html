@@ -1,0 +1,52 @@
+{% load static %}
+{% block body %} {% include 'header.html' %}
+
+{% for message in messages %}
+      <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+        <strong>Message !</strong> {{message}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      {% endfor %}
+<center>
+    <div class="glr" style="margin: 10px; 
+    border-radius: 5px;">
+    <a target="_blank" href="image_detail/{{t.id}}">
+      <img src="{{photo.file.url}}" alt="photo" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.7), 0 6px 20px 0 rgba(0, 0, 0, 0.19); height:500px; width:800px " >
+    </a>
+  </div>
+  <div class="desc"><b> Uplode By:</b> {{photo.suser.user.first_name}}  {{photo.suser.user.last_name}}</div>
+  <hr>
+</center>
+<h4 style="margin-right:50px ; margin-left:50px">Add A comments</h4>
+
+    <div class="container py-5">
+        <div class="col-lg-8">
+                <img src="{{usr.img.url}}" alt="avatar" class="rounded-circle img-fluid" style="width: 50px; height:50px">
+                  <p class="text-muted mb-0">{{request.user.first_name}} {{request.user.last_name}}</p>  
+         </div>
+         <form action="" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+         <div class="form-input">
+          <label class="lb" for="message">Message:</label>
+                <textarea id="message" name="comment" required style="width:70%"></textarea>
+          </div> 
+          <button type="submit" class="btn btn-outline-success ms-1">Submit</button>
+        </form> <hr>
+        </div>
+     </div> 
+
+     <h5 style="margin-right:50px ; margin-left:50px">All old Comment..</h5>
+    {% for c in cmt %}
+      <div style="margin-right:50px ; margin-left:50px"; >
+        <p style=" color:green ; font-size:13px; display: inline-block ">
+                  <img src="{{c.suser.img.url}}" alt="avatar" class="rounded-circle img-fluid" style="width: 40px; height:40px">
+                    Name: {{c.suser.user.first_name}} {{c.suser.user.last_name}} &nbsp&nbsp&nbsp&nbsp&nbsp Date: {{c.postdate}}</p>
+                    <p class="text-muted mb-0">{{c.comment}} </p> 
+           
+           <hr>
+      </div>
+ {% endfor %}
+
+  {% endblock %}
